@@ -4,15 +4,16 @@ const User = require('../models/usersModel.js');
 const Exercise = require('../models/exerciseModel.js');
 
 
-//Middle =ware function is required
 router.post('/users', async (req, res) => {
     const { username } = req.body;
 
+    //Checking whether username has value
     if (!username){
        return res.json({error : 'Username is not provided'});
     } 
 
     try {
+        //Adding user into the database
         await User.create({username})
         const userCreated =  await User.findOne({username: username});
         res.json({'_id': userCreated._id, 'username' : userCreated.username}) ;   
@@ -29,12 +30,14 @@ router.post('/users/:_id/exercises', async(req, res) => {
     const exerciseDate = date ? new Date(date) : new Date();
     console.log(`req.body: ${req.body}`)
     console.log(`id   : ${id}`)
-
+    
+    //Checking if the id has been posted
     if (!id){
         return res.json({ error : 'Error has occured submitting information'});
      } 
      
     try {
+        //Adding exercise details into the database
         await Exercise.create({ id: id, description: description, duration: duration, date: exerciseDate});
         res.json({id: id, description: description, duration: duration, date: exerciseDate})
     } catch (error) {
@@ -46,6 +49,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
 //Getting the list of all users
 router.get('/users', async (req, res) => {
     try {
+       //Retrieving all users from the database
        const allUsers =  await User.find();
        const newAllUsers = allUsers.filter((item) => item._v != 0);
        res.send(newAllUsers);
@@ -55,12 +59,13 @@ router.get('/users', async (req, res) => {
 
 });
 
+
 //retrieving a full exercise log of any user.
 router.get('/users/:_id/logs', async (req, res) => {
     const id = req.params._id;
     let exerciseLogs = {};
 
-    
+    //Checking "id" has value
     if (!id){
         return res.json({error : 'id is not provided'});
      } 
