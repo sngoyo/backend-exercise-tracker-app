@@ -39,7 +39,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
         //Retrieving username by using given Id
         const { _id, username } = await User.findOne({_id : id });
         //Adding exercise details into the database
-        await Exercise.create({ id: id, description: description, duration: parseInt(duration), date: exerciseDate});
+        await Exercise.create({ id: id, description: description, duration: Number(duration), date: exerciseDate});
         return res.json({_id: id, username: username, date: exerciseDate, duration: duration, description: description});
     } catch (error) {
         res.json({error : 'Information could not be saved, error occured'})
