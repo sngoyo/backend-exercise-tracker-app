@@ -37,9 +37,11 @@ router.post('/users/:_id/exercises', async(req, res) => {
      } 
      
     try {
+        //Retrieving username by using given Id
+        const { _id, username } = await User.findOne({_id : id });
         //Adding exercise details into the database
         await Exercise.create({ id: id, description: description, duration: duration, date: exerciseDate});
-        res.json({id: id, description: description, duration: duration, date: exerciseDate})
+        res.json({id: id, username: username, date: exerciseDate, duration: duration, description: description});
     } catch (error) {
         res.json({error : 'Information could not be saved, error occured'})
     }
@@ -50,7 +52,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
 router.get('/users', async (req, res) => {
     try {
        //Retrieving all users from the database
-       const allUsers =  await User.find();
+       const allUsers =  (await User.find());
        const newAllUsers = allUsers.filter((item) => item._v != 0);
        res.send(newAllUsers);
     } catch (error) {
