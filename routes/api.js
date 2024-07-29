@@ -69,7 +69,9 @@ router.get('/users', async (req, res) => {
 //retrieving a full exercise log of any user.
 router.get('/users/:_id/logs', async (req, res) => {
     const id = req.params._id;
+    const { from, to, limit } = req.query;
     let exerciseLogs = {};
+    let logs = [];
 
     //Checking "id" has value
     if (!id){
@@ -80,14 +82,28 @@ router.get('/users/:_id/logs', async (req, res) => {
         //Counting Documents in exercise model by using given Id
         const count = await Exercise.countDocuments({ id : id});
         console.log(`There are logs : ${count}`);
-
+    
         //Retrieving Username by using given Id
         const username = await User.findById({_id : id}).lean();
         console.log(`username : ${username}`);
+  
+        if(!req.query){
+           //Retrieving excercise information by using given Id
+           logs = await Exercise.find({id: id}).lean();
+        } else {
+           //Validate and parse query parameters
+           const fromDate = new Date(from);
+           const toDate = new Date(to);
+           const logLimit = parseInt(limit, 10);
 
-        //Retrieving excercise information by using given Id
-        const logs = await Exercise.find({id: id}).lean();
-
+           if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
+              return res.status(400).send('Invalid query paramters');
+           } else {
+               logs = await Exercise.find({id: id, date: {$gte: fromDate, $lte: toDate}}).toLimit(logLimit).lean();
+           }
+        }
+      
+    
         //Extracting only exercise details
         const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
         console.log(`newLogs : ${newLogs}`);
