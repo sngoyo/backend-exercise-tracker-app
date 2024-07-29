@@ -71,7 +71,7 @@ router.get('/users/:_id/logs', async (req, res) => {
     const id = req.params._id;
     const { from, to, limit } = req.query;
     let exerciseLogs = {};
-    let logs=[];
+    let logs;
 
     //Checking "id" has value
     if (!id){
@@ -100,9 +100,8 @@ router.get('/users/:_id/logs', async (req, res) => {
               return res.status(400).send('Invalid query paramters');
            } else {
                logs = await Exercise.find({id: id, date: {$gte: fromDate, $lte: toDate}})
-                                    .limit(logLimit)
                                     .lean()
-                                    
+                                    .limit(logLimit);                            
            }
         }
       
