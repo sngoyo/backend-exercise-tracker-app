@@ -27,8 +27,13 @@ router.post('/users', async (req, res) => {
 router.post('/users/:_id/exercises', async(req, res) => {
     const id = req.params._id;
     const {description, duration, date } = req.body;
-    const exerciseDate = date ? new Date(date).toDateString() : new Date().toDateString();
+
+    //Converting  duration value from String to number 
     let parsedDuration  = Number(duration);
+
+    //Capturing posted date if not posted enter current date
+    const exerciseDate = date ? new Date(date).toDateString() : new Date().toDateString();
+   
     
     //Checking if the id has been posted
     if (!id){
@@ -82,15 +87,22 @@ router.get('/users/:_id/logs', async (req, res) => {
 
         //Retrieving excercise information by using given Id
         const logs = await Exercise.find({id: id}).lean();
+
+        //Extracting only exercise details
         const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
         console.log(`newLogs : ${newLogs}`);
+        
+        //Changing date format value in retrieved logs from database
+        const updatedNewLogs = newLogs.map((log)  => {
+           return {'description': log.description, 'duration': log.duration, 'date': log.date.toDateString()}
+        });
 
       
         //Putting All together
         exerciseLogs['username'] = username.username;
         exerciseLogs['count'] = count;
         exerciseLogs['_id'] = id;
-        exerciseLogs['log'] = newLogs;
+        exerciseLogs['log'] = updatedNewLogs;
         res.json(exerciseLogs);
 
      } catch (error) {
