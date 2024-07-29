@@ -27,9 +27,8 @@ router.post('/users', async (req, res) => {
 router.post('/users/:_id/exercises', async(req, res) => {
     const id = req.params._id;
     const {description, duration, date } = req.body;
-    const exerciseDate = date ? new Date(date) : new Date();
-    console.log(`req.body: ${req.body}`)
-    console.log(`id   : ${id}`)
+    const exerciseDate = date ? new Date(date).toDateString() : new Date().toDateString();
+
     
     //Checking if the id has been posted
     if (!id){
