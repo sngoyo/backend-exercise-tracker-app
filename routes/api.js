@@ -112,7 +112,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         const updatedNewLogs = newLogs.map((log)  => {
            return {'description': log.description, 'duration': log.duration, 'date': log.date.toDateString()}
         });
-        console.log(`upadatednewLogs : ${updatedNewLogs}`);
+        console.log(`upadatednewLogs : ${updatedNewLogs.date}`);
       
         //Putting All together
         exerciseLogs['username'] = username.username;
