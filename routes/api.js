@@ -81,11 +81,9 @@ router.get('/users/:_id/logs', async (req, res) => {
      try {
         //Counting Documents in exercise model by using given Id
         const count = await Exercise.countDocuments({ id : id});
-        console.log(`There are logs : ${count}`);
     
         //Retrieving Username by using given Id
-        const username = await User.findById({_id : id}).lean();
-        console.log(`username : ${username}`);
+        const username = await User.findById({_id : id}).lean()
   
         if(!from || !to || !limit){
            //Retrieving excercise information by using given Id
@@ -108,13 +106,13 @@ router.get('/users/:_id/logs', async (req, res) => {
     
         //Extracting only exercise details
         const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
-        console.log(`newLogs : ${newLogs}`);
+       
         
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
         const updatedNewLogs = newLogs.map((log)  => {
            return {'description': log.description, 'duration': log.duration, 'date': log.date.toDateString()}
         });
-
+        console.log(`upadatednewLogs : ${updatedNewLogs}`);
       
         //Putting All together
         exerciseLogs['username'] = username.username;
