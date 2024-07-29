@@ -28,7 +28,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
     const id = req.params._id;
     const {description, duration, date } = req.body;
     const exerciseDate = date ? new Date(date).toDateString() : new Date().toDateString();
-
+    let parsedDuration  = Number(duration);
     
     //Checking if the id has been posted
     if (!id){
@@ -39,8 +39,8 @@ router.post('/users/:_id/exercises', async(req, res) => {
         //Retrieving username by using given Id
         const { _id, username } = await User.findOne({_id : id });
         //Adding exercise details into the database
-        await Exercise.create({ id: id, description: description, duration: Number(duration), date: exerciseDate});
-        return res.json({_id: id, username: username, date: exerciseDate, duration: duration, description: description});
+        await Exercise.create({ id: id, description: description, duration: parsedDuration, date: exerciseDate});
+        return res.json({_id: id, username: username, date: exerciseDate, duration: parsedDuration, description: description});
     } catch (error) {
         res.json({error : 'Information could not be saved, error occured'})
     }
