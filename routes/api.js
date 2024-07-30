@@ -98,8 +98,8 @@ router.get('/users/:_id/logs', async (req, res) => {
               return res.status(400).send('Invalid query paramters');
            } else {
                logs = await Exercise.find({id: id, date: {$gte: fromDate, $lte: toDate}})
-                                    .lean()
-                                    .limit(logLimit);                            
+                                    .limit(logLimit)
+                                    .lean()                          
            }
         }
       
@@ -112,7 +112,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         const updatedNewLogs = newLogs.map((log)  => {
            return {'description': log.description, 'duration': log.duration, 'date': log.date.toDateString()}
         });
-        console.log(`upadatednewLogs : ${updatedNewLogs.duration}`);
+       /// console.log(`upadatednewLogs : ${updatedNewLogs.duration}`);
       
         //Putting All together
         exerciseLogs['username'] = username.username;
