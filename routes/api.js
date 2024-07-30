@@ -69,7 +69,7 @@ router.get('/users', async (req, res) => {
 //retrieving a full exercise log of any user.
 router.get('/users/:_id/logs', async (req, res) => {
     const id = req.params._id;
-    const { from, to, limit } = req.query;
+    const { from, to, limit } = req.query.lean();
     let exerciseLogs = {};
     let logs;
 
