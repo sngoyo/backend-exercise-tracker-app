@@ -85,7 +85,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         //Retrieving Username by using given Id
         const username = await User.findById({_id : id}).lean()
   
-        if(!from || !to || !limit){
+        if(!from && !to && !limit){
            //Retrieving excercise information by using given Id
            logs = await Exercise.find({id: id}).lean();
         } else {
