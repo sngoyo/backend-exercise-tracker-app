@@ -92,14 +92,14 @@ router.get('/users/:_id/logs', async (req, res) => {
            //Validate and parse query parameters
            const fromDate = new Date(from);
            const toDate = new Date(to);
-           const logLimit = parseInt(limit, 10);
+           const logLimit = parseInt(limit);
 
            if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
               return res.status(400).send('Invalid query paramters');
            } else {
                logs = await Exercise.find({id: id, date: {$gte: fromDate, $lte: toDate}})
-                                    .limit(logLimit) 
-                                    .lean();                       
+                                    .limit(logLimit)
+                                    .lean()                          
            }
         }
       
