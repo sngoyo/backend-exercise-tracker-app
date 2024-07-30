@@ -79,6 +79,8 @@ router.get('/users/:_id/logs', async (req, res) => {
      } 
     
      try {
+        from = from.toDateString();
+        to = to.toDateString();
         //Counting Documents in exercise model by using given Id
         const count = await Exercise.countDocuments({ id : id});
     
