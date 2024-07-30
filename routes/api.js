@@ -92,7 +92,7 @@ router.get('/users/:_id/logs', async (req, res) => {
            //Validate and parse query parameters
            const fromDate = new Date(from);
            const toDate = new Date(to);
-           const logLimit = limit;
+           const logLimit = Number(limit);
 
            if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
               return res.status(400).send('Invalid query paramters');
