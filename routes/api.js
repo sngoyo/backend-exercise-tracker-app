@@ -85,14 +85,14 @@ router.get('/users/:_id/logs', async (req, res) => {
         //Retrieving Username by using given Id
         const username = await User.findById({_id : id}).lean()
   
-        if(!from && !to && !limit){
+        if(!from || !to || !limit){
            //Retrieving excercise information by using given Id
            logs = await Exercise.find({id: id}).lean();
         } else {
            //Validate and parse query parameters
            const fromDate = new Date(from);
            const toDate = new Date(to);
-           const logLimit = parseInt(limit, 10);
+           const logLimit = parseInt(limit, 11);
 
            if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
               return res.status(400).send('Invalid query paramters');
