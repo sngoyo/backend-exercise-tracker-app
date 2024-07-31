@@ -74,7 +74,7 @@ router.get('/users/:_id/logs', async (req, res) => {
     let logs;
 
     const fromDate = req.query.from ? new Date(from) : undefined;
-    const toDaTE = req.query.to ? new Date(to) : undefined;
+    const toDate = req.query.to ? new Date(to) : undefined;
     const logLimit = req.query.limit ? parseInt(req.query.limit) : undefined;
     
 
@@ -111,8 +111,8 @@ router.get('/users/:_id/logs', async (req, res) => {
       const logs = await logsQuery.exec(); */
          if (from || to ) {
             const date = {};
-            if (from) date.$gte = fromDate;
-            if (to) date.$lte = toDate;
+            if (from) date[$gte] = fromDate;
+            if (to) date[$lte] = toDate;
          }
       //  if(!from || !to || !limit){
            //Retrieving excercise information by using given Id
