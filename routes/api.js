@@ -73,11 +73,11 @@ router.get('/users/:_id/logs', async (req, res) => {
     let exerciseLogs = {};
     let logs;
 
-   /* const from = req.query.from ? new Date(from) : undefined;
-    const to = req.query.to ? new Date(to) : undefined;
-    const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
+    const fromDate = req.query.from ? new Date(from) : undefined;
+    const toDaTE = req.query.to ? new Date(to) : undefined;
+    const logLimit = req.query.limit ? parseInt(req.query.limit) : undefined;
     
-*/
+
     //Checking "id" has value
     if (!id){
         return res.json({error : 'id is not provided'});
@@ -109,24 +109,31 @@ router.get('/users/:_id/logs', async (req, res) => {
       }
 
       const logs = await logsQuery.exec(); */
-
-        if(!from || !to || !limit){
+         if (from || to ) {
+            const date = {};
+            if (from) date.$gte = fromDate;
+            if (to) date.$lte = toDate;
+         }
+      //  if(!from || !to || !limit){
            //Retrieving excercise information by using given Id
            logs = await Exercise.find({id: id}).lean();
-        } else {
+
+     //   } else {
            //Validate and parse query parameters
-           const fromDate = new Date(from);
+         /*  const fromDate = new Date(from);
            const toDate = new Date(to);
            const logLimit = parseInt(limit, 10);
+           */
 
            if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
               return res.status(400).send('Invalid query paramters');
            } else {
-               logs = await Exercise.find({id: id, date: {$gte: fromDate, $lte: toDate}})
+            //   logs = await Exercise.find({id: id, date: {$gte: fromDate, $lte: toDate}})
+            logs = await Exercise.find({id: id, date})
                                     .limit(logLimit)
                                     .lean()                    
            }
-        }
+      //  }
       
       
         //Extracting only exercise details
