@@ -116,7 +116,7 @@ router.get('/users/:_id/logs', async (req, res) => {
          }
       //  if(!from || !to || !limit){
            //Retrieving excercise information by using given Id
-           logs = await Exercise.find({id: id}).lean();
+        //   logs = await Exercise.find({id: id}).lean();
 
      //   } else {
            //Validate and parse query parameters
@@ -125,17 +125,19 @@ router.get('/users/:_id/logs', async (req, res) => {
            const logLimit = parseInt(limit, 10);
            */
 
-           if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
-              return res.status(400).send('Invalid query paramters');
-           } else {
+          /// if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
+            //  return res.status(400).send('Invalid query paramters');
+        //   } else {
             //   logs = await Exercise.find({id: id, date: {$gte: fromDate, $lte: toDate}})
             logs = await Exercise.find({id: id, date})
-                                    .limit(logLimit)
+                                 //   .limit(logLimit)
                                     .lean()                    
-           }
+        //   }
       //  }
       
-      
+        if (limit) {
+         log.limit(logLimit)
+        }
         //Extracting only exercise details
         const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
        
