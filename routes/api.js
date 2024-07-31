@@ -118,8 +118,8 @@ router.get('/users/:_id/logs', async (req, res) => {
          } 
          
          if (from || to) {
-           const fromDate = new Date(0);
-           const toDate = new Date();
+           let fromDate = new Date(0);
+           let toDate = new Date();
            if (from) {
             fromDate = new Date(from)
            }
