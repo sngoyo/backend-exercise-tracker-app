@@ -138,7 +138,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         //Extracting only exercise details
         const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
        
-        console.log(`newLogs : ${newLogs}`);
+     
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
         const updatedNewLogs = newLogs.map((log)  => {
            return {'description': log.description, 'duration': log.duration, 'date': new Date(log.date).toDateString()}
@@ -150,8 +150,9 @@ router.get('/users/:_id/logs', async (req, res) => {
         exerciseLogs['count'] = updatedNewLogs.length;
         exerciseLogs['_id'] = id;
         exerciseLogs['log'] = updatedNewLogs;
+        console.log(`exerciseLogs : ${exerciseLogs}`);
         return res.json(exerciseLogs);
-
+        
      } catch (error) {
       console.log(`error ${error}`)
       return res.status(500).json({ error: 'Internal server error' })
