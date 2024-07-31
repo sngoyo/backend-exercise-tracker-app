@@ -107,7 +107,7 @@ router.get('/users/:_id/logs', async (req, res) => {
 
            logs = logs.filter((logDate) => {
               logDate =  new Date(logDate.date).getTime();
-              return fromDate <= logDate && toDate <= logDate;
+              return logDate >= fromDate && toDate <= logDate;
            })
            
          }
@@ -121,14 +121,13 @@ router.get('/users/:_id/logs', async (req, res) => {
         const updatedNewLogs = newLogs.map((log)  => {
            return {'description': log.description, 'duration': log.duration, 'date': new Date(log.date).toDateString()}
         });
-       /// console.log(`upadatednewLogs : ${updatedNewLogs.duration}`);
+        console.log(`upadatednewLogs : ${updatedNewLogs.duration}`);
       
         //Putting All together
         exerciseLogs['username'] = username.username;
         exerciseLogs['count'] = updatedNewLogs.length;
         exerciseLogs['_id'] = id;
         exerciseLogs['log'] = updatedNewLogs;
-        console.log(`exerciseLogs : ${exerciseLogs.log}`);
         return res.json(exerciseLogs);
         
      } catch (error) {
