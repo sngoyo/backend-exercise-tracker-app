@@ -73,9 +73,9 @@ router.get('/users/:_id/logs', async (req, res) => {
     let exerciseLogs = {};
     let logs;
 
-   // const fromDate = new Date(from);
-   // const toDate = new Date(to);
-    //const logLimit = parseInt(limit, 10);
+     const fromDate = new Date(from);
+     const toDate = new Date(to);
+     const logLimit = parseInt(limit, 10);
     
 
     //Checking "id" has value
@@ -94,9 +94,9 @@ router.get('/users/:_id/logs', async (req, res) => {
            return res.status(404).json({ error: 'Username not found' });
         }
 
-       if(!from || !to || !limit){
+     /*  if(!from || !to || !limit){
            //Retrieving excercise information by using given Id
-           logs = await Exercise.find({id: id}).lean();
+         
 
         } else {
            //Validate and parse query parameters
@@ -110,10 +110,25 @@ router.get('/users/:_id/logs', async (req, res) => {
            } else {
                logs = await Exercise.find({id: id, date: { $gte: fromDate, $lte: toDate}})
                                     .lean()
-                                    .limit(logLimit) 
-                                                                                      
+                                    .limit(logLimit)                                                                             
            }
         }
+        */ 
+         logs = await Exercise.find({id: id}).lean();
+
+         if(limit) {
+            logs = logs.slice(0,logLimit);
+         } 
+         
+         if (fromDate || toDate) {
+           fromDate = fromDate.getTime();
+           toDate = toDate.getTime();
+           logs = logs.filter((logDate) => {
+              logDate =  new Date(logDate).getTime();
+              fromDate >= logDate && toDate <= logDate;
+           })
+         }
+
   
         //Extracting only exercise details
         const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
