@@ -84,7 +84,7 @@ router.get('/users/:_id/logs', async (req, res) => {
      } 
 
     //Buld the query Object
-    const query = { id: mongoose.Types.ObjectId(id)};
+    const query = {id: id};
 
     if (from || to) {
       query.date = {};
