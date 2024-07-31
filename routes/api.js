@@ -118,8 +118,15 @@ router.get('/users/:_id/logs', async (req, res) => {
          } 
          
          if (from || to) {
-           const fromDate = new Date(from).getTime();
-           const toDate = new Date(to).getTime();
+           const fromDate = new Date(0);
+           const toDate = new Date();
+           if (from) {
+            fromDate = new Date(from)
+           }
+           if (to) {
+            toDate = new Date(to)
+           }
+
            logs = logs.filter((logDate) => {
               logDate =  new Date(logDate.date).getTime();
               fromDate >= logDate && toDate <= logDate;
