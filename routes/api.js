@@ -89,7 +89,7 @@ router.get('/users/:_id/logs', async (req, res) => {
            return res.status(404).json({ error: 'Username not found' });
         }
 
-         logs = await Exercise.find({id: id})
+         logs = await Exercise.find({id: id}).lean();
 
          if(limit) {
             logs = logs.slice(0,logLimit);
