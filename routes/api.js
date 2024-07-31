@@ -110,8 +110,7 @@ router.get('/users/:_id/logs', async (req, res) => {
            } else {
                logs = await Exercise.find({id: id, date: {$gte: fromDate, $lte: toDate}})
                                      .lean()
-                                     .limit(logLimit)
-                                                 
+                                     .limit(logLimit)     ;                                       
               
            }
         }
