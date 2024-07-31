@@ -136,7 +136,7 @@ router.get('/users/:_id/logs', async (req, res) => {
       //  }
       
         if (limit) {
-         log.limit(logLimit)
+         logs.limit(logLimit)
         }
         //Extracting only exercise details
         const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
