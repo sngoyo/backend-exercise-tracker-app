@@ -147,7 +147,7 @@ router.get('/users/:_id/logs', async (req, res) => {
       
         //Putting All together
         exerciseLogs['username'] = username.username;
-        exerciseLogs['count'] = updatedNewLogs.length - 1;
+        exerciseLogs['count'] = updatedNewLogs.length;
         exerciseLogs['_id'] = id;
         exerciseLogs['log'] = updatedNewLogs;
         return res.json(exerciseLogs);
