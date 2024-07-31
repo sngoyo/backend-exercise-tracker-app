@@ -72,7 +72,7 @@ router.get('/users/:_id/logs', async (req, res) => {
     const { from, to, limit } = req.query;
     let exerciseLogs = {};
     let logs;
-     const logLimit = parseInt(limit, 10);
+     const logLimit = parseInt(limit);
     
 
     //Checking "id" has value
@@ -134,11 +134,11 @@ router.get('/users/:_id/logs', async (req, res) => {
            
          }
 
-         console.log(`logs : ${logs}`);
+         
         //Extracting only exercise details
         const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
        
-        
+        console.log(`newLogs : ${newLogs}`);
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
         const updatedNewLogs = newLogs.map((log)  => {
            return {'description': log.description, 'duration': log.duration, 'date': log.date.toDateString()}
