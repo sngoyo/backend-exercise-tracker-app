@@ -100,15 +100,15 @@ router.get('/users/:_id/logs', async (req, res) => {
 
         } else {
            //Validate and parse query parameters
-           const fromDate = from ? new Date(from).toISOString() : new Date(0);
-           const toDate = to ? new Date(to).toISOString() : new Date().toISOString();
+           const fromDate = from ? new Date(from) : new Date(0);
+           const toDate = to ? new Date(to): new Date();
            const logLimit = limit ? parseInt(limit, 10) : 0;
            
 
            if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
               return res.status(400).send('Invalid query parameters');
            } else {
-               logs = await Exercise.find({id: id, date: {$gte: fromDate, $lte: toDate}})
+               logs = await Exercise.find({id: id, date: {$gte: new ISODate(fromDate), $lte: new ISODate(toDate)}})
                                                  
                 if (logLimit > logs.length)  {
                    logs.limit(logLimit)
