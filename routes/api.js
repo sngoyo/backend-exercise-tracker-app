@@ -117,7 +117,7 @@ router.get('/users/:_id/logs', async (req, res) => {
             logs = logs.slice(0,logLimit);
          } 
          
-         if (fromDate || toDate) {
+         if (from || to) {
            const fromDate = new Date(from).getTime();
            const toDate = new Date(to).getTime();
            logs = logs.filter((logDate) => {
