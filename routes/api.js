@@ -69,15 +69,15 @@ router.get('/users', async (req, res) => {
 //retrieving a full exercise log of any user.
 router.get('/users/:_id/logs', async (req, res) => {
     const id = req.params._id;
-   // const { from, to, limit } = req.query;
+    const { from, to, limit } = req.query;
     let exerciseLogs = {};
     let logs;
 
-    const from = req.query.from ? new Date(from) : undefined;
+   /* const from = req.query.from ? new Date(from) : undefined;
     const to = req.query.to ? new Date(to) : undefined;
     const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
     
-
+*/
     //Checking "id" has value
     if (!id){
         return res.json({error : 'id is not provided'});
@@ -86,11 +86,11 @@ router.get('/users/:_id/logs', async (req, res) => {
     //Buld the query Object
     const query = {id: id};
 
-    if (from || to) {
+   /* if (from || to) {
       query.date = {};
       if (from) query.date.$gte = from;
       if (to) query.date.$lte = to;
-    }
+    }*/
 
 
      try {
@@ -103,14 +103,14 @@ router.get('/users/:_id/logs', async (req, res) => {
            return res.status(404).json({ error: 'Username not found' });
         }
 
-      const logsQuery = Exercise.find(query);
+     /* const logsQuery = Exercise.find(query);
       if (limit) {
          logsQuery.limit(limit);
       }
 
-      const logs = await logsQuery.exec();
+      const logs = await logsQuery.exec(); */
 
-     /*   if(!from || !to || !limit || limit < 0 ){
+        if(!from || !to || !limit){
            //Retrieving excercise information by using given Id
            logs = await Exercise.find({id: id}).lean();
         } else {
@@ -128,7 +128,7 @@ router.get('/users/:_id/logs', async (req, res) => {
            }
         }
       
-       */
+      
         //Extracting only exercise details
         const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
        
