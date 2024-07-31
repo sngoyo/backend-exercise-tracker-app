@@ -100,9 +100,9 @@ router.get('/users/:_id/logs', async (req, res) => {
 
         } else {
            //Validate and parse query parameters
-           const fromDate = from ? new Date(from) : new Date(0);
-           const toDate = to ? new Date(to): new Date();
-           const logLimit = limit ? parseInt(limit, 10) : 0;
+           const fromDate = new Date(from);
+           const toDate = new Date(to);
+           const logLimit = parseInt(limit, 10)
            
 
            if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
@@ -110,8 +110,7 @@ router.get('/users/:_id/logs', async (req, res) => {
            } else {
                logs = await Exercise.find({id: id, date: { $gte: fromDate, $lte: toDate}})
                                     .lean()
-                                    .limit(logLimit) 
-                                                                                      
+                                    .limit(logLimit)                                                                                    
            }
         }
   
