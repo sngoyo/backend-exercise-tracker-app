@@ -109,11 +109,10 @@ router.get('/users/:_id/logs', async (req, res) => {
               return res.status(400).send('Invalid query parameters');
            } else {
                logs = await Exercise.find({id: id, date: {$gte: new ISODate(fromDate), $lte: new ISODate(toDate)}})
+                                    .lean()
+                                    .limit(logLimit)
                                                  
-                if (logLimit > logs.length)  {
-                   logs.limit(logLimit)
-                       .lean()
-                }   
+              
            }
         }
   
