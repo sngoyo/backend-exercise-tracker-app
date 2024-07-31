@@ -72,9 +72,6 @@ router.get('/users/:_id/logs', async (req, res) => {
     const { from, to, limit } = req.query;
     let exerciseLogs = {};
     let logs;
-
-     const fromDate = new Date(from);
-     const toDate = new Date(to);
      const logLimit = parseInt(limit, 10);
     
 
@@ -86,7 +83,7 @@ router.get('/users/:_id/logs', async (req, res) => {
   
      try {
         //Counting Documents in exercise model by using given Id
-        const count = await Exercise.countDocuments({ id : id});
+       // const count = await Exercise.countDocuments({ id : id});
     
         //Retrieving Username by using given Id
         const username = await User.findById({_id : id}).lean()
@@ -121,8 +118,8 @@ router.get('/users/:_id/logs', async (req, res) => {
          } 
          
          if (fromDate || toDate) {
-           fromDate = fromDate.getTime();
-           toDate = toDate.getTime();
+           fromDate = new Date(from).getTime();
+           toDate = new Date(to).getTime();
            logs = logs.filter((logDate) => {
               logDate =  new Date(logDate.date).getTime();
               fromDate >= logDate && toDate <= logDate;
@@ -130,7 +127,7 @@ router.get('/users/:_id/logs', async (req, res) => {
            
          }
 
-  
+         console.log(`logs : ${logs}`);
         //Extracting only exercise details
         const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
        
@@ -143,7 +140,7 @@ router.get('/users/:_id/logs', async (req, res) => {
       
         //Putting All together
         exerciseLogs['username'] = username.username;
-        exerciseLogs['count'] = updatedNewlogs.length - 1;
+        exerciseLogs['count'] = updatedNewLogs.length;
         exerciseLogs['_id'] = id;
         exerciseLogs['log'] = updatedNewLogs;
         return res.json(exerciseLogs);
