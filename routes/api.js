@@ -84,7 +84,7 @@ router.get('/users/:_id/logs', async (req, res) => {
      try {
     
         //Retrieving Username by using given Id
-        const username = await User.findById({_id : id}).lean()
+        const username = await User.findById({_id : id})
         if(!username) {
            return res.status(404).json({ error: 'Username not found' });
         }
