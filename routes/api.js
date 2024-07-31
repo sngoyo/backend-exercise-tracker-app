@@ -73,9 +73,9 @@ router.get('/users/:_id/logs', async (req, res) => {
     let exerciseLogs = {};
     let logs;
 
-    const fromDate = req.query.from ? new Date(from) : undefined;
-    const toDate = req.query.to ? new Date(to) : undefined;
-    const logLimit = req.query.limit ? parseInt(req.query.limit) : undefined;
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    const logLimit = parseInt(limit, 10);
     
 
     //Checking "id" has value
