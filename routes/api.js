@@ -83,16 +83,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         return res.json({error : 'id is not provided'});
      } 
 
-    //Buld the query Object
-    const query = {id: id};
-
-   /* if (from || to) {
-      query.date = {};
-      if (from) query.date.$gte = from;
-      if (to) query.date.$lte = to;
-    }*/
-
-
+  
      try {
         //Counting Documents in exercise model by using given Id
         const count = await Exercise.countDocuments({ id : id});
@@ -103,37 +94,26 @@ router.get('/users/:_id/logs', async (req, res) => {
            return res.status(404).json({ error: 'Username not found' });
         }
 
-     /* const logsQuery = Exercise.find(query);
-      if (limit) {
-         logsQuery.limit(limit);
-      }
-
-      const logs = await logsQuery.exec(); */
-         if (from || to ) {
-            const date = {};
-            if (from) date[$gte] = fromDate;
-            if (to) date[$lte] = toDate;
-         }
-      //  if(!from || !to || !limit){
+       if(!from || !to || !limit){
            //Retrieving excercise information by using given Id
-        //   logs = await Exercise.find({id: id}).lean();
+           logs = await Exercise.find({id: id}).lean();
 
-     //   } else {
+        } else {
            //Validate and parse query parameters
-         /*  const fromDate = new Date(from);
+           const fromDate = new Date(from);
            const toDate = new Date(to);
            const logLimit = parseInt(limit, 10);
-           */
+           
 
-          /// if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
-            //  return res.status(400).send('Invalid query paramters');
-        //   } else {
-            //   logs = await Exercise.find({id: id, date: {$gte: fromDate, $lte: toDate}})
+           if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
+              return res.status(400).send('Invalid query paramters');
+           } else {
+               logs = await Exercise.find({id: id, date: {$gte: fromDate, $lte: toDate}})
             logs = await Exercise.find({id: id, date})
-                                 //   .limit(logLimit)
+                                    .limit(logLimit)
                                     .lean()                    
-        //   }
-      //  }
+           }
+        }
       
         if (limit) {
          logs.limit(logLimit)
