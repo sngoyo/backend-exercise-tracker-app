@@ -84,7 +84,7 @@ router.get('/users/:_id/logs', async (req, res) => {
      try {
     
         //Retrieving Username by using given Id
-        const username = await User.findById({_id : id})
+        const username = await User.findById({_id : id}).lean
         if(!username) {
            return res.status(404).json({ error: 'Username not found' });
         }
@@ -114,11 +114,11 @@ router.get('/users/:_id/logs', async (req, res) => {
 
          
         //Extracting only exercise details
-      //  const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
+        const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
        
      
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
-        const updatedNewLogs = logs.map((log)  => { 
+        const updatedNewLogs = newLogs.map((log)  => { 
            return {'description': log.description, 'duration': log.duration, 'date': new Date(log.date).toDateString()}
         });
         console.log(`upadatednewLogs : ${updatedNewLogs}`);
