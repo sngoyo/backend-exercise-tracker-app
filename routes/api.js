@@ -100,7 +100,7 @@ router.get('/users/:_id/logs', async (req, res) => {
 
         } else {
            //Validate and parse query parameters
-           const fromDate = from ? new Date(from).toDateString() : new Date(0).toDateString();
+           const fromDate = from ? new Date(from).toDateString() : new Date(0);
            const toDate = to ? new Date(to).toDateString() : new Date().toDateString();
            const logLimit = limit ? parseInt(limit, 10) : 0;
            
