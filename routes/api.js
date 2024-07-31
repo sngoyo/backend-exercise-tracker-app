@@ -120,14 +120,14 @@ router.get('/users/:_id/logs', async (req, res) => {
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
         const updatedNewLogs = newLogs.map((log)  => {
          if (isNaN(log.date)){
-            var newDate = new Date(log.date);
+            var newDate = new Date(log.date).toDateString();
          } else {
-            newDate = log.date;
+            newDate = log.date.toDateString();
          }
            
-           return {'description': log.description, 'duration': log.duration, 'date': newDate.toDateString()}
+           return {'description': log.description, 'duration': log.duration, 'date': newDate}
         });
-        console.log(`upadatednewLogs : ${updatedNewLogs.duration}`);
+        console.log(`upadatednewLogs : ${updatedNewLogs}`);
       
         //Putting All together
         exerciseLogs['username'] = username.username;
