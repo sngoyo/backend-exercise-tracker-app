@@ -82,8 +82,6 @@ router.get('/users/:_id/logs', async (req, res) => {
 
   
      try {
-        //Counting Documents in exercise model by using given Id
-       // const count = await Exercise.countDocuments({ id : id});
     
         //Retrieving Username by using given Id
         const username = await User.findById({_id : id}).lean()
@@ -91,26 +89,6 @@ router.get('/users/:_id/logs', async (req, res) => {
            return res.status(404).json({ error: 'Username not found' });
         }
 
-     /*  if(!from || !to || !limit){
-           //Retrieving excercise information by using given Id
-         
-
-        } else {
-           //Validate and parse query parameters
-           const fromDate = from ? new Date(from).toDateString() : new Date(0);
-           const toDate = to ? new Date(to).toDateString(): new Date().toDateString();
-           const logLimit = limit ? parseInt(limit, 10) : 0;
-           
-
-           if(isNaN(fromDate.getTime()) || isNaN(toDate.getTime()) || isNaN(logLimit)){
-              return res.status(400).send('Invalid query parameters');
-           } else {
-               logs = await Exercise.find({id: id, date: { $gte: fromDate, $lte: toDate}})
-                                    .lean()
-                                    .limit(logLimit)                                                                             
-           }
-        }
-        */ 
          logs = await Exercise.find({id: id}).lean();
 
          if(limit) {
@@ -129,7 +107,7 @@ router.get('/users/:_id/logs', async (req, res) => {
 
            logs = logs.filter((logDate) => {
               logDate =  new Date(logDate.date).getTime();
-              fromDate <= logDate && toDate <= logDate;
+              return fromDate <= logDate && toDate <= logDate;
            })
            
          }
@@ -150,7 +128,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         exerciseLogs['count'] = updatedNewLogs.length;
         exerciseLogs['_id'] = id;
         exerciseLogs['log'] = updatedNewLogs;
-        console.log(`exerciseLogs : ${exerciseLogs}`);
+        console.log(`exerciseLogs : ${exerciseLogs.log}`);
         return res.json(exerciseLogs);
         
      } catch (error) {
