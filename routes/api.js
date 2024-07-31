@@ -127,6 +127,7 @@ router.get('/users/:_id/logs', async (req, res) => {
               logDate =  new Date(logDate.date).getTime();
               fromDate >= logDate && toDate <= logDate;
            })
+           
          }
 
   
@@ -142,7 +143,7 @@ router.get('/users/:_id/logs', async (req, res) => {
       
         //Putting All together
         exerciseLogs['username'] = username.username;
-        exerciseLogs['count'] = count;
+        exerciseLogs['count'] = updatedNewlogs.length - 1;
         exerciseLogs['_id'] = id;
         exerciseLogs['log'] = updatedNewLogs;
         return res.json(exerciseLogs);
