@@ -128,8 +128,8 @@ router.get('/users/:_id/logs', async (req, res) => {
         exerciseLogs['count'] = updatedNewLogs.length;
         exerciseLogs['_id'] = id;
         exerciseLogs['log'] = updatedNewLogs;
-        console.log(`exerciseLogs : ${exerciseLogs}`);
-        return res.json(exerciseLogs.log);
+        console.log(`exerciseLogs : ${exerciseLogs.log}`);
+        return res.json(exerciseLogs);
         
      } catch (error) {
       console.log(`error ${error}`)
