@@ -68,15 +68,15 @@ router.get('/users', async (req, res) => {
 
 //retrieving a full exercise log of any user.
 router.get('/users/:_id/logs', async (req, res) => {
-    const id = req.params._id;
+    const userId = req.params._id;
     const { from, to, limit } = req.query;
     let exerciseLogs = {};
     let logs;
-     const logLimit = parseInt(limit);
+     const logLimit = parseInt(limit, 10);
     
 
     //Checking "id" has value
-    if (!id){
+    if (!userId){
         return res.json({error : 'id is not provided'});
      } 
 
@@ -84,16 +84,16 @@ router.get('/users/:_id/logs', async (req, res) => {
      try {
     
         //Retrieving Username by using given Id
-        const username = await User.findById({_id : id})
-        if(!username) {
+        const user = await User.findById({_id : userId})
+        if(!user) {
            return res.status(404).json({ error: 'Username not found' });
         }
 
-         logs = await Exercise.find({id: id}).lean();
+         logs = await Exercise.find({id: userId}).lean();
 
          if (from || to) {
-           let fromDate = new Date(0);
-           let toDate = new Date();
+           let fromDate = new Date(0).getTime();
+           let toDate = new Date().getTime();
            if (from) {
             fromDate = new Date(from).getTime()
            }
@@ -116,7 +116,7 @@ router.get('/users/:_id/logs', async (req, res) => {
 
          
         //Extracting only exercise details
-       const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
+       const newLogs = logs.map(({_id, userId, __v, ...rest}) => rest);
        
      
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
@@ -127,9 +127,9 @@ router.get('/users/:_id/logs', async (req, res) => {
         
       
         //Putting All together
-        exerciseLogs['username'] = username.username;
+        exerciseLogs['username'] = user.username;
         exerciseLogs['count'] = updatedNewLogs.length;
-        exerciseLogs['_id'] = id;
+        exerciseLogs['_id'] = userId;
         exerciseLogs['log'] = updatedNewLogs;
         console.log(`exerciseLogs : ${exerciseLogs.log}`);
         return res.json(exerciseLogs);
