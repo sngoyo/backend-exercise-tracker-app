@@ -80,6 +80,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         return res.json({error : 'id is not provided'});
      } 
 
+  
      try {
     
         //Retrieving Username by using given Id
@@ -87,11 +88,9 @@ router.get('/users/:_id/logs', async (req, res) => {
         if(!user) {
            return res.status(404).json({ error: 'Username not found' });
         }
-         
-        // Retrieving logs by user ID
+
          logs = await Exercise.find({id: userId}).lean();
 
-         // Filtering by date if "from" or "to" is provided
          if (from || to) {
            let fromDate = from ? new Date(from).getTime() : new Date(0).getTime();
            let toDate = to ? new Date(to).getTime() : new Date().getTime();
@@ -103,12 +102,14 @@ router.get('/users/:_id/logs', async (req, res) => {
            
          }
 
-        //Excluding other unwanted exercise details
+      
+
+        //Extracting only exercise details
         logs = logs.map(({_id, userId, __v, ...rest}) => rest);
        
      
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
-         logs = logs.map((log) => { 
+         logs = logs.map((log)  => { 
            return {
             'description': log.description, 
             'duration': log.duration, 
@@ -116,17 +117,18 @@ router.get('/users/:_id/logs', async (req, res) => {
          }
         });
         
-        //Limiting the number of logs
+           //Limiting the number of logs
         if(logLimit) {
-           logs = logs.slice(0,logLimit);
+            logs = logs.slice(0,logLimit);
          } 
          
+      
         //Putting All together
         exerciseLogs['username'] = user.username;
         exerciseLogs['count'] = logs.length;
         exerciseLogs['_id'] = userId;
         exerciseLogs['log'] = logs;
-
+        console.log(`exerciseLogs : ${exerciseLogs.log}`);
         return res.json(exerciseLogs);
         
      } catch (error) {
