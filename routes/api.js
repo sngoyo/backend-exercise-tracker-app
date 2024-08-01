@@ -121,13 +121,14 @@ router.get('/users/:_id/logs', async (req, res) => {
         const updatedNewLogs = logs.map((log)  => { 
            return {'description': log.description, 'duration': log.duration, 'date': new Date(log.date).toDateString()}
         });
-        console.log(`upadatednewLogs : ${updatedNewLogs}`);
+      
       
         //Putting All together
         exerciseLogs['username'] = username.username;
         exerciseLogs['count'] = updatedNewLogs.length;
         exerciseLogs['_id'] = id;
         exerciseLogs['log'] = updatedNewLogs;
+        console.log(`exerciseLogs : ${exerciseLogs}`);
         return res.json(exerciseLogs);
         
      } catch (error) {
