@@ -80,7 +80,6 @@ router.get('/users/:_id/logs', async (req, res) => {
         return res.json({error : 'id is not provided'});
      } 
 
-  
      try {
     
         //Retrieving Username by using given Id
