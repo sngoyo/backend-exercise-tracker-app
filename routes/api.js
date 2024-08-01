@@ -91,10 +91,6 @@ router.get('/users/:_id/logs', async (req, res) => {
 
          logs = await Exercise.find({id: id}).lean();
 
-         if(limit) {
-            logs = logs.slice(0,logLimit);
-         } 
-         
          if (from || to) {
            let fromDate = new Date(0);
            let toDate = new Date();
@@ -112,6 +108,12 @@ router.get('/users/:_id/logs', async (req, res) => {
            
          }
 
+
+         if(limit && limit !== 0) {
+            logs = logs.slice(0,logLimit);
+         } 
+         
+
          
         //Extracting only exercise details
       // const newLogs = logs.map(({_id, id, __v, ...rest}) => rest);
@@ -121,7 +123,8 @@ router.get('/users/:_id/logs', async (req, res) => {
         const updatedNewLogs = logs.map((log)  => { 
            return {'description': log.description, 'duration': log.duration, 'date': new Date(log.date).toDateString()}
         });
-      
+        
+        
       
         //Putting All together
         exerciseLogs['username'] = username.username;
