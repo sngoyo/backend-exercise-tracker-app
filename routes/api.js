@@ -109,7 +109,7 @@ router.get('/users/:_id/logs', async (req, res) => {
          }
 
 
-         if(limit && limit !== 0) {
+         if(limit) {
             logs = logs.slice(0,logLimit);
          } 
          
