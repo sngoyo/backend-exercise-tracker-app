@@ -127,7 +127,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         exerciseLogs['_id'] = userId;
         exerciseLogs['log'] = logs;
 
-        return res.json(exerciseLogs);
+        res.json(exerciseLogs);
         
      } catch (error) {
       console.log(`error ${error}`)
