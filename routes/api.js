@@ -99,10 +99,10 @@ router.get('/users/:_id/logs', async (req, res) => {
            let fromDate = new Date(0);
            let toDate = new Date();
            if (from) {
-            fromDate = new Date(from)
+            fromDate = new Date(from).getTime()
            }
            if (to) {
-            toDate = new Date(to)
+            toDate = new Date(to).getTime()
            }
 
            logs = logs.filter((logDate) => {
