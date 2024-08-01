@@ -102,29 +102,32 @@ router.get('/users/:_id/logs', async (req, res) => {
            
          }
 
-         //Limiting the number of logs
-         if(logLimit) {
-            logs = logs.slice(0,logLimit);
-         } 
-         
+      
 
-         
         //Extracting only exercise details
-       const newLogs = logs.map(({_id, userId, __v, ...rest}) => rest);
+         logs = logs.map(({_id, userId, __v, ...rest}) => rest);
        
      
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
-        const updatedNewLogs = logs.map((log)  => { 
-           return {'description': log.description, 'duration': log.duration, 'date': new Date(log.date).toDateString()}
+         logs = logs.map((log)  => { 
+           return {
+            'description': log.description, 
+            'duration': log.duration, 
+            'date': new Date(log.date).toDateString()
+         }
         });
         
-        
+           //Limiting the number of logs
+        if(logLimit) {
+            logs = logs.slice(0,logLimit);
+         } 
+         
       
         //Putting All together
         exerciseLogs['username'] = user.username;
-        exerciseLogs['count'] = updatedNewLogs.length;
+        exerciseLogs['count'] = logs.length;
         exerciseLogs['_id'] = userId;
-        exerciseLogs['log'] = updatedNewLogs;
+        exerciseLogs['log'] = logs;
         console.log(`exerciseLogs : ${exerciseLogs.log}`);
         return res.json(exerciseLogs);
         
