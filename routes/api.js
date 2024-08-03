@@ -105,6 +105,8 @@ router.get('/users/:_id/logs', async (req, res) => {
 
          })
            
+         } else if(from == "" || to =="" ){
+            return res.status(400).json({ error: 'Invalid  dates' });
          }
          
       
