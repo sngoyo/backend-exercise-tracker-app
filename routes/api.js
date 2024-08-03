@@ -101,7 +101,7 @@ router.get('/users/:_id/logs', async (req, res) => {
            
          }
 
-         console.log(`exerciseLogs : ${logs.log}`);
+         console.log(`exerciseLogs : ${logs}`);
 
         //Extracting only exercise details
         logs = logs.map(({_id, userId, __v, ...rest}) =>  rest);
