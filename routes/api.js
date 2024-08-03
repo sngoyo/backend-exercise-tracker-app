@@ -104,9 +104,9 @@ router.get('/users/:_id/logs', async (req, res) => {
                 return updatedLogDate >= fromDate && updatedLogDate <= toDate;        
             }) 
              
-         } else if (from =="" || to == ""){
+       /*  } else if (from =="" || to == ""){
             return res.status(400).json({ error: 'Invalid  dates' });
-         }
+         }*/
          
       
         logs = logs.map (({ _id, userId, __v, ...rest } )=> rest)
