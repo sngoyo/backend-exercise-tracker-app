@@ -71,7 +71,7 @@ router.get('/users/:_id/logs', async (req, res) => {
     const userId = req.params._id;
     const { from, to, limit } = req.query;
     let exerciseLogs = {};
-    //let logs;
+    let logs;
     const logLimit = parseInt(limit, 10);
     
 
@@ -85,30 +85,36 @@ router.get('/users/:_id/logs', async (req, res) => {
         //Retrieving Username by using given Id
         const user = await User.findById({_id : userId})
         if(!user) {
-           return res.status(404).json({ error: 'Username not found' });
+           return res.status(400).json({ error: 'Username not found' });
         }
 
-        let  logs = await Exercise.find({id: userId}).lean();
+         logs = await Exercise.find({id: userId}).lean()
+      
 
          if (from || to) {
-           let fromDate = from ? new Date(from).getTime() : new Date(0).getTime();
-           let toDate = to ? new Date(to).getTime() : new Date().getTime();
+          // let fromDate = from? new Date(from).getTime() : new Date(0).getTime();
+           //let toDate = to ? new Date(to).getTime() : new Date().getTime();
+          let fromDate = new Date(0).getTime()
+           let toDate = new Date().getTime()
+           if (from) fromDate = new Date(from).getTime()
+           if (to) toDate = new Date(to).getTime()
 
-           logs = logs.filter(logDate => {
-              logDate =  new Date(logDate.date).getTime();
-              return logDate >= fromDate && toDate <= logDate;
-           })
+         logs = logs.filter(logDate => {
+              const updatedLogDate =  new Date(logDate.date).getTime()
+              //return updatedLogDate >= fromDate && toDate <= updatedLogDate    
+              return updatedLogDate >= fromDate && updatedLogDate <= toDate;        
+
+         })
            
          }
 
          console.log(`exerciseLogs : ${logs}`);
-
         //Extracting only exercise details
-        logs = logs.map(({_id, userId, __v, ...rest}) =>  rest);
+        const UpdatedLogs = logs.map(({_id, userId, __v, ...rest}) =>  rest);
        
         
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
-         logs = logs.map((log)  => { 
+         logs = UpdatedLogs.map((log)  => { 
            return {
             'description': log.description, 
             'duration': log.duration, 
