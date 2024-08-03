@@ -115,6 +115,7 @@ router.get('/users/:_id/logs', async (req, res) => {
             'date': new Date(log.date).toDateString()
          }
         });
+        console.log(`exerciseLogs : ${logs.log}`);
         
            //Limiting the number of logs
         if(logLimit) {
@@ -127,7 +128,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         exerciseLogs['count'] = logs.length;
         exerciseLogs['_id'] = userId;
         exerciseLogs['log'] = logs;
-        console.log(`exerciseLogs : ${exerciseLogs.log}`);
+      
         return res.json(exerciseLogs);
         
      } catch (error) {
