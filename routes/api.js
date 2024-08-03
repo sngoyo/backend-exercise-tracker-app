@@ -110,7 +110,7 @@ router.get('/users/:_id/logs', async (req, res) => {
 
          console.log(`exerciseLogs : ${logs}`);
         //Extracting only exercise details
-        const logs = logs.map(({_id, userId, __v, ...rest}) =>  rest);
+         logs = logs.map(({_id, userId, __v, ...rest}) =>  rest);
        
         
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
