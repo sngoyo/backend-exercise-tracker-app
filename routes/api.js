@@ -106,7 +106,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         //Extracting only exercise details
         logs = logs.map(({_id, userId, __v, ...rest}) =>  rest);
        
-     
+        console.log(`exerciseLogs : ${logs.log}`);
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
          logs = logs.map((log)  => { 
            return {
@@ -115,7 +115,7 @@ router.get('/users/:_id/logs', async (req, res) => {
             'date': new Date(log.date).toDateString()
          }
         });
-        console.log(`exerciseLogs : ${logs.log}`);
+      
         
            //Limiting the number of logs
         if(logLimit) {
