@@ -94,14 +94,13 @@ router.get('/users/:_id/logs', async (req, res) => {
          if (from || to) {
           // let fromDate = from? new Date(from).getTime() : new Date(0).getTime();
            //let toDate = to ? new Date(to).getTime() : new Date().getTime();
-          let fromDate = new Date(0).getTime()
+           let fromDate = new Date(0).getTime()
            let toDate = new Date().getTime()
            if (from) fromDate = new Date(from).getTime()
            if (to) toDate = new Date(to).getTime()
 
-         logs = logs.filter(logDate => {
-              const updatedLogDate =  new Date(logDate.date).getTime()
-              //return updatedLogDate >= fromDate && toDate <= updatedLogDate    
+           logs = logs.filter(logDate => {
+              const updatedLogDate =  new Date(logDate.date).getTime()   
               return updatedLogDate >= fromDate && updatedLogDate <= toDate;        
 
          })
@@ -110,7 +109,7 @@ router.get('/users/:_id/logs', async (req, res) => {
 
          console.log(`exerciseLogs : ${logs}`);
         //Extracting only exercise details
-         logs = logs.map(({_id, userId, __v, ...rest}) =>  rest);
+        // logs = logs.map(({_id, userId, __v, ...rest}) =>  rest);
        
         
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
