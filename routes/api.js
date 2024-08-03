@@ -92,12 +92,12 @@ router.get('/users/:_id/logs', async (req, res) => {
       
 
          if (from || to) {
-          // let fromDate = from? new Date(from).getTime() : new Date(0).getTime();
-           //let toDate = to ? new Date(to).getTime() : new Date().getTime();
-           let fromDate = new Date(0).getTime()
+           let fromDate = from? new Date(from).getTime() : new Date(0).getTime();
+           let toDate = to ? new Date(to).getTime() : new Date().getTime();
+         /*  let fromDate = new Date(0).getTime()
            let toDate = new Date().getTime()
            if (from) fromDate = new Date(from).getTime()
-           if (to) toDate = new Date(to).getTime()
+           if (to) toDate = new Date(to).getTime()*/
 
            logs = logs.filter(logDate => {
               const updatedLogDate =  new Date(logDate.date).getTime()   
