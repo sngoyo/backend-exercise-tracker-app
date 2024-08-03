@@ -86,8 +86,10 @@ router.get('/users/:_id/logs', async (req, res) => {
         const user = await User.findById({_id : userId})
         if(!user) {
            return res.status(400).json({ error: 'Username not found' });
+        } else {
+            exerciseLogs['username'] = user.username;
         }
-
+     
          logs = await Exercise.find({id: userId}).lean()
       
 
@@ -127,7 +129,7 @@ router.get('/users/:_id/logs', async (req, res) => {
          
          console.log(`exerciseLogs : ${typeof updatedLogs}`);
         //Putting All together
-        exerciseLogs['username'] = user.username;
+       
         exerciseLogs['count'] = logs.length;
         exerciseLogs['_id'] = userId;
         exerciseLogs['log'] = updatedLogs;
