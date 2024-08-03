@@ -71,7 +71,7 @@ router.get('/users/:_id/logs', async (req, res) => {
     const userId = req.params._id;
     const { from, to, limit } = req.query;
     let exerciseLogs = {};
-    let logs;
+    //let logs;
     const logLimit = parseInt(limit, 10);
     
 
@@ -88,7 +88,7 @@ router.get('/users/:_id/logs', async (req, res) => {
            return res.status(404).json({ error: 'Username not found' });
         }
 
-         logs = await Exercise.find({id: userId}).lean();
+        let  logs = await Exercise.find({id: userId}).lean();
 
          if (from || to) {
            let fromDate = from ? new Date(from).getTime() : new Date(0).getTime();
