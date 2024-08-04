@@ -119,12 +119,8 @@ router.get('/users/:_id/logs', async (req, res) => {
         if(!user) {
            return res.status(400).json({ error: 'Username not found' });
         } else {
-            exerciseLogs['username'] = user.username;
-        }
-     
          logs = await Exercise.find({id: userId}).lean()
       
-
          if (from || to) {
              let fromDate = new Date(0).getTime()
              let toDate = new Date().getTime()
@@ -161,11 +157,12 @@ router.get('/users/:_id/logs', async (req, res) => {
         } 
          
         //Putting All together
-       
+        exerciseLogs['_id'] = userId;   
+        exerciseLogs['username'] = user.username;
         exerciseLogs['count'] =  newLogList.length;
-        exerciseLogs['_id'] = userId;      
         exerciseLogs['log'] = newLogList; 
         return res.send(exerciseLogs);
+    }
         
      } catch (error) {
       console.log(`error ${error}`)
