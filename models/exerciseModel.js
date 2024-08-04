@@ -16,9 +16,9 @@ const exerciseSchema = new mongoose.Schema({
     duration: {
         type: Number
     },
-    
+
     date: {
-        type: Date
+        type: String
     }
 })
 
