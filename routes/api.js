@@ -114,19 +114,16 @@ router.get('/users/:_id/logs', async (req, res) => {
             date: new Date(log.date).toDateString()
          }))
            
-      
+        //Limiting the number of logs
+        if(logLimit) {
+          logs = logs.slice(0,logLimit);
+        } 
+         
          console.log(`exerciseLogs : ${typeof updatedLogs}`);
         //Putting All together
        
         exerciseLogs['count'] = logs.length;
-        exerciseLogs['_id'] = userId;
-
-        //Limiting the number of logs
-        if(logLimit) {
-                logs = logs.slice(0,logLimit);
-         } 
-             
-             
+        exerciseLogs['_id'] = userId;      
         exerciseLogs['log'] = logs;
       
         return res.send(exerciseLogs);
