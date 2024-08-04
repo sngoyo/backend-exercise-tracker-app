@@ -43,14 +43,11 @@ router.post('/users/:_id/exercises', async(req, res) => {
      
     try {
         //Retrieving username by using given Id
-        const { _id, user } = await User.findOne({_id : userId });
-
-     //   if(!user) {
-      //      return ressend('There is no username for the given user ID')
-      //  }
+        const  user = await User.findOne({_id : userId });
+ 
         //Adding exercise details into the database
         await Exercise.create({ id: userId, date: exerciseDate, duration: parsedDuration, description: description });
-        return res.json({_id: userId, username: user, date: exerciseDate, duration: parsedDuration, description: description});
+        return res.json({_id: userId, username: user.username, date: exerciseDate, duration: parsedDuration, description: description});
 
     } catch (error) {
         res.json({error : 'Information could not be saved, error occured'})
