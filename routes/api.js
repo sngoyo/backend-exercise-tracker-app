@@ -28,10 +28,6 @@ router.post('/users/:_id/exercises', async(req, res) => {
     const userId = req.params._id;
     const { description, duration, date } = req.body;
      
-   
-    //Converting  duration value from String to number 
-    const parsedDuration  = duration;
-
     //Capturing posted date if not posted enter current date
     const exerciseDate = date ? new Date(date).toDateString() : new Date().toDateString();
     
@@ -54,7 +50,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
 
         if(String(user._id) === userId){
         //Adding exercise details into the database
-        const exercise = await Exercise.create({ 'id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description });
+        const exercise = await Exercise.create({ 'id': userId, 'username': user.username, 'date': exerciseDate, 'duration': duration, 'description': description });
         
         console.log(`_id : ${user._id} `)
         console.log(`username : ${user.username} `) 
