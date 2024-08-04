@@ -4,7 +4,7 @@ const exerciseSchema = new mongoose.Schema({
     id: { type: String,
          required: true 
         },
-        
+
     description: {
         type: String
     },
@@ -16,6 +16,7 @@ const exerciseSchema = new mongoose.Schema({
     date: {
         type: String
     }
-})
+}, { versionKey: false }
+)
 
 module.exports = mongoose.model('Exercise', exerciseSchema);
