@@ -48,7 +48,11 @@ router.post('/users/:_id/exercises', async(req, res) => {
  
         //Adding exercise details into the database
         await Exercise.create({ 'id': userId, 'date': exerciseDate, 'duration': parsedDuration, 'description': description });
-        console.log(`username : ${{'_id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description}}`)
+        console.log(`username : ${userId} `)
+        console.log(`date : ${exerciseDate} `)
+        console.log(`duration : ${parsedDuration} `)
+        console.log(`description : ${description} `)
+
         return res.json({'_id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description});
   
 
