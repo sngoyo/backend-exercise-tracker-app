@@ -44,7 +44,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
         //Retrieving username by using given Id
         const { _id, username } = await User.findOne({_id : id });
         //Adding exercise details into the database
-        await Exercise.create({ id: id, description: description, duration: parsedDuration, date: exerciseDate});
+        await Exercise.create({ id: id, date: exerciseDate, duration: parsedDuration,description: description });
         return res.json({_id: id, username: username, date: exerciseDate, duration: parsedDuration, description: description});
     } catch (error) {
         res.json({error : 'Information could not be saved, error occured'})
@@ -119,7 +119,6 @@ router.get('/users/:_id/logs', async (req, res) => {
           logs = logs.slice(0,logLimit);
         } 
          
-         //console.log(`exerciseLogs : ${typeof updatedLogs}`);
         //Putting All together
        
         exerciseLogs['count'] = logs.length;
