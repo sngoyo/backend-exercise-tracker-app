@@ -45,7 +45,11 @@ router.post('/users/:_id/exercises', async(req, res) => {
         //Retrieving username by using given Id
         const  user = await User.findOne({_id : userId });
       
- 
+        if(user == null){
+            return res.json({ error: "could not find the ID. enter the correct one" });
+        }
+
+        if(String(user._id) == userId){
         //Adding exercise details into the database
         await Exercise.create({ 'id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description });
     
@@ -58,8 +62,8 @@ router.post('/users/:_id/exercises', async(req, res) => {
         const userObject = {'_id':user._id, 'username': user.username};
         const exerciseObject = {'date': exerciseDate, 'duration': parsedDuration, 'description': description};  
         return res.json({...userObject, ...exerciseObject});
+        }
   
-
     } catch (error) {
         res.json({error : 'Information could not be saved, error occured'})
     }
