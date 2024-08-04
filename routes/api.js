@@ -26,7 +26,7 @@ router.post('/users', async (req, res) => {
 
 router.post('/users/:_id/exercises', async(req, res) => {
     const userId = req.params._id;
-    const {description, duration, date } = req.body;
+    const { description, duration, date } = req.body;
      
     if (!description || !duration) {
        return res.send('Error description and duration were not provided')
