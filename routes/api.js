@@ -43,6 +43,9 @@ router.post('/users/:_id/exercises', async(req, res) => {
     try {
         //Retrieving username by using given Id
         const { _id, username } = await User.findOne({_id : userId });
+        if(!username) {
+            return ressend('There is no username for the given user ID')
+        }
         //Adding exercise details into the database
         await Exercise.create({ id: userId, date: exerciseDate, duration: parsedDuration, description: description });
         return res.json({_id: userId, username: username, date: exerciseDate, duration: parsedDuration, description: description});
