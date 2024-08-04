@@ -30,7 +30,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
      
    
     //Converting  duration value from String to number 
-    const parsedDuration  = Number(duration);
+    const parsedDuration  = duration;
 
     //Capturing posted date if not posted enter current date
     const exerciseDate = date ? new Date(date).toDateString() : new Date().toDateString();
