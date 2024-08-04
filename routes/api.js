@@ -46,15 +46,15 @@ router.post('/users/:_id/exercises', async(req, res) => {
         if ( description === "" || duration === "") {
             return res.json({ error: "please enter required fields" });
           }
-          
+
         //Retrieving username by using given Id
         const  user = await User.findOne({_id : userId });
       
-        if(user == null){
+        if(user === null){
             return res.json({ error: "could not find the ID. enter the correct one" });
         }
 
-        if(String(user._id) == userId){
+        if(String(user._id) === userId){
         //Adding exercise details into the database
         await Exercise.create({ 'id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description });
     
