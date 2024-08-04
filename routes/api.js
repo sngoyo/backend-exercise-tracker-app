@@ -25,7 +25,7 @@ router.post('/users', async (req, res) => {
 
 
 router.post('/users/:_id/exercises', async(req, res) => {
-    const id = req.params._id;
+    const userId = req.params._id;
     const {description, duration, date } = req.body;
 
     //Converting  duration value from String to number 
@@ -36,16 +36,16 @@ router.post('/users/:_id/exercises', async(req, res) => {
    
     
     //Checking if the id has been posted
-    if (!id){
+    if (!userId){
         return res.json({ error : 'Error has occured submitting information'});
      } 
      
     try {
         //Retrieving username by using given Id
-        const { _id, username } = await User.findOne({_id : id });
+        const { _id, username } = await User.findOne({_id : userId });
         //Adding exercise details into the database
-        await Exercise.create({ id: id, date: exerciseDate, duration: parsedDuration,description: description });
-        return res.json({_id: id, username: username, date: exerciseDate, duration: parsedDuration, description: description});
+        await Exercise.create({ id: userId, date: exerciseDate, duration: parsedDuration,description: description });
+        return res.json({_id: userId, username: username, date: exerciseDate, duration: parsedDuration, description: description});
     } catch (error) {
         res.json({error : 'Information could not be saved, error occured'})
     }
