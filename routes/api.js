@@ -34,14 +34,12 @@ router.post('/users/:_id/exercises', async(req, res) => {
 
     //Capturing posted date if not posted enter current date
     const exerciseDate = date ? new Date(date).toDateString() : new Date().toDateString();
-   
     
-    //Checking if the id has been posted
-    if (!userId){
-        return res.json({ error : 'Error has occured submitting information'});
-     } 
-     
     try {
+         //Checking if the id has been posted
+        if (!userId){
+           return res.json({ error : 'Error has occured submitting information'});
+        } 
 
         if ( description === "" || duration === "") {
             return res.json({ error: "please enter required fields" });
@@ -56,17 +54,26 @@ router.post('/users/:_id/exercises', async(req, res) => {
 
         if(String(user._id) === userId){
         //Adding exercise details into the database
-        await Exercise.create({ 'id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description });
+        const exercise = await Exercise.create({ 'id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description });
+
+        return res.json({
+            '_id' : user._id,
+            'username': user.username,
+            'date': new Date(exercise.date).toDateString(),
+            'duration': exercise.duration,
+            'description': exercise.description
+
+        })
     
-        console.log(`_id : ${user._id} `)
+       /* console.log(`_id : ${user._id} `)
         console.log(`username : ${user.username} `) 
         console.log(`date : ${exerciseDate} `)
         console.log(`duration : ${parsedDuration} `)
-        console.log(`description : ${description} `)
+        console.log(`description : ${description} `) */
 
-        const userObject = {'_id':user._id, 'username': user.username};
-        const exerciseObject = {'date': exerciseDate, 'duration': parsedDuration, 'description': description};  
-        return res.json({...userObject, ...exerciseObject});
+       // const userObject = {'_id':user._id, 'username': user.username};
+        //const exerciseObject = {'date': exerciseDate, 'duration': parsedDuration, 'description': description};  
+       // return res.json({...userObject, ...exerciseObject});
         }
   
     } catch (error) {
@@ -152,7 +159,7 @@ router.get('/users/:_id/logs', async (req, res) => {
          
         //Putting All together
        
-        exerciseLogs['count'] = newLogList.length;
+        exerciseLogs['count'] =  newLogList.length;
         exerciseLogs['_id'] = userId;      
         exerciseLogs['log'] = newLogList; 
         return res.send(exerciseLogs);
