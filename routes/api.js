@@ -55,6 +55,12 @@ router.post('/users/:_id/exercises', async(req, res) => {
         if(String(user._id) === userId){
         //Adding exercise details into the database
         const exercise = await Exercise.create({ 'id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description });
+        
+        console.log(`_id : ${user._id} `)
+        console.log(`username : ${user.username} `) 
+        console.log(`date : ${exercise.date} `)
+        console.log(`duration : ${exercise.duration} `)
+        console.log(`description : ${exercise.description} `) 
 
         return res.json({
             '_id' : user._id,
@@ -65,11 +71,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
 
         })
     
-       /* console.log(`_id : ${user._id} `)
-        console.log(`username : ${user.username} `) 
-        console.log(`date : ${exerciseDate} `)
-        console.log(`duration : ${parsedDuration} `)
-        console.log(`description : ${description} `) */
+     
 
        // const userObject = {'_id':user._id, 'username': user.username};
         //const exerciseObject = {'date': exerciseDate, 'duration': parsedDuration, 'description': description};  
