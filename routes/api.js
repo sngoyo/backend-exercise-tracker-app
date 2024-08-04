@@ -48,7 +48,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
  
         //Adding exercise details into the database
         await Exercise.create({ 'id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description });
-        const excerciseData = Exercise.findOne({'id': userId});
+        const excerciseData = Exercise.findOne({'id': userId}).lean();
 
         console.log(`_id : ${excerciseData.id} `)
         console.log(`username : ${excerciseData.username} `)
