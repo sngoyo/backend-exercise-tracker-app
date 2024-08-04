@@ -88,7 +88,6 @@ router.get('/users/:_id/logs', async (req, res) => {
            return res.status(400).json({ error: 'Username not found' });
         } else {
             exerciseLogs['username'] = user.username;
-            exerciseLogs['_id'] = userId;
         }
      
          logs = await Exercise.find({id: userId}).lean()
@@ -120,7 +119,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         //Putting All together
        
         exerciseLogs['count'] = logs.length;
-       
+        exerciseLogs['_id'] = userId;
 
         //Limiting the number of logs
         if(logLimit) {
