@@ -119,13 +119,12 @@ router.get('/users/:_id/logs', async (req, res) => {
           logs = logs.slice(0,logLimit);
         } 
          
-         console.log(`exerciseLogs : ${typeof updatedLogs}`);
+         //console.log(`exerciseLogs : ${typeof updatedLogs}`);
         //Putting All together
        
         exerciseLogs['count'] = logs.length;
         exerciseLogs['_id'] = userId;      
-        exerciseLogs['log'] = logs;
-      
+        exerciseLogs['log'] = logs; 
         return res.send(exerciseLogs);
         
      } catch (error) {
