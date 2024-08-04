@@ -58,7 +58,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
         console.log(`description : ${description} `)
 
        // res.json({'_id': excerciseData.id, 'username': excerciseData.username, 'date': newDate, 'duration': excerciseData.duration, 'description': excerciseData.description});
-        res.json({'_id':user._id, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description});
+        return res.json({'_id':user._id, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description});
   
 
     } catch (error) {
