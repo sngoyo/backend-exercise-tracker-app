@@ -88,6 +88,7 @@ router.get('/users/:_id/logs', async (req, res) => {
            return res.status(400).json({ error: 'Username not found' });
         } else {
             exerciseLogs['username'] = user.username;
+            exerciseLogs['_id'] = userId;
         }
      
          logs = await Exercise.find({id: userId}).lean()
@@ -105,13 +106,7 @@ router.get('/users/:_id/logs', async (req, res) => {
             }) 
         }
 
-               //Limiting the number of logs
-               if(logLimit) {
-                logs = logs.slice(0,logLimit);
-             } 
-             
-             
- 
+        
         logs = logs.map (({ _id, userId, __v, ...rest } )=> rest)
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
          let updatedLogs = logs.map(log => ({
@@ -125,7 +120,14 @@ router.get('/users/:_id/logs', async (req, res) => {
         //Putting All together
        
         exerciseLogs['count'] = logs.length;
-        exerciseLogs['_id'] = userId;
+       
+
+        //Limiting the number of logs
+        if(logLimit) {
+                logs = logs.slice(0,logLimit);
+         } 
+             
+             
         exerciseLogs['log'] = logs;
       
         return res.send(exerciseLogs);
