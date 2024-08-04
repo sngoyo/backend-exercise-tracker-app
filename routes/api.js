@@ -152,7 +152,7 @@ router.get('/users/:_id/logs', async (req, res) => {
          
         //Putting All together
        
-        exerciseLogs['count'] = logs.length;
+        exerciseLogs['count'] = newLogList.length;
         exerciseLogs['_id'] = userId;      
         exerciseLogs['log'] = newLogList; 
         return res.send(exerciseLogs);
