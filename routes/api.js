@@ -42,6 +42,11 @@ router.post('/users/:_id/exercises', async(req, res) => {
      } 
      
     try {
+
+        if ( description === "" || duration === "") {
+            return res.json({ error: "please enter required fields" });
+          }
+          
         //Retrieving username by using given Id
         const  user = await User.findOne({_id : userId });
       
