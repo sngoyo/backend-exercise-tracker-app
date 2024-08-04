@@ -138,7 +138,7 @@ router.get('/users/:_id/logs', async (req, res) => {
         }
 
         
-        //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
+       
          /* logs = logs.map(log => ({
             description: log.description, 
             duration: log.duration, 
@@ -146,7 +146,8 @@ router.get('/users/:_id/logs', async (req, res) => {
          }))*/
 
          let newLogList = [];
-
+         
+        //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
          logs.map((log) => {
             newLogList.push({description: log.description, 
             duration: log.duration, 
