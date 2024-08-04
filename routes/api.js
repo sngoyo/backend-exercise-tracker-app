@@ -103,6 +103,7 @@ router.get('/users/:_id/logs', async (req, res) => {
                 const updatedLogDate =  new Date(logDate.date).getTime()   
                 return updatedLogDate >= fromDate && updatedLogDate <= toDate;        
             }) 
+        }
              
        /*  } else if (from =="" || to == ""){
             return res.status(400).json({ error: 'Invalid  dates' });
