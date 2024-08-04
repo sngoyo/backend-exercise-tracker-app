@@ -48,8 +48,8 @@ router.post('/users/:_id/exercises', async(req, res) => {
  
         //Adding exercise details into the database
         await Exercise.create({ 'id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description });
-        const excerciseData = await Exercise.findOne({'id': userId});
-        const newDate = new Date(excerciseData.date).toDateString();
+      //  const excerciseData = await Exercise.findOne({'id': userId});
+       // const newDate = new Date(excerciseData.date).toDateString();
 
         /*console.log(`_id : ${excerciseData.id} `)
         console.log(`username : ${excerciseData.username} `)
@@ -59,7 +59,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
         console.log(`description : ${excerciseData.description} `)
 */
        // res.json({'_id': excerciseData.id, 'username': excerciseData.username, 'date': newDate, 'duration': excerciseData.duration, 'description': excerciseData.description});
-        res.json({'_id':user._id, 'username': user.username, 'date': newDate, 'duration': excerciseData.duration, 'description': excerciseData.description});
+        res.json({'_id':user._id, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description});
   
 
     } catch (error) {
