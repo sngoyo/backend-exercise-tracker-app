@@ -5,13 +5,13 @@ const exerciseSchema = new mongoose.Schema({
          required: true 
         },
     description: {
-        type:String
+        type: String
     },
     duration: {
         type: Number
     },
     date: {
-        type: Date
+        type: String
     }
 })
 
