@@ -58,7 +58,8 @@ router.post('/users/:_id/exercises', async(req, res) => {
         console.log(`duration : ${excerciseData.duration} `)
         console.log(`description : ${excerciseData.description} `)
 */
-        res.json({'_id': excerciseData.id, 'username': excerciseData.username, 'date': newDate, 'duration': excerciseData.duration, 'description': excerciseData.description});
+       // res.json({'_id': excerciseData.id, 'username': excerciseData.username, 'date': newDate, 'duration': excerciseData.duration, 'description': excerciseData.description});
+        res.json({'_id':user._id, 'username': user.username, 'date': newDate, 'duration': excerciseData.duration, 'description': excerciseData.description});
   
 
     } catch (error) {
