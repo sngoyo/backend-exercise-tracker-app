@@ -129,24 +129,32 @@ router.get('/users/:_id/logs', async (req, res) => {
         }
 
         
-      //  logs = logs.map (({ _id, userId, __v, ...rest } )=> rest)
         //Changing date format value in retrieved logs from database  from the mongodb date format to dateString
           logs = logs.map(log => ({
             description: log.description, 
             duration: log.duration, 
             date: new Date(log.date).toDateString()
          }))
+
+         let newLogList = [];
+
+         logs.map((log) => {
+            newLogList.push({description: log.description, 
+            duration: log.duration, 
+            date: new Date(log.date).toDateString()
+            })
+         })
            
         //Limiting the number of logs
         if(logLimit) {
-          logs = logs.slice(0,logLimit);
+            newLogList = newLogList.slice(0,logLimit);
         } 
          
         //Putting All together
        
         exerciseLogs['count'] = logs.length;
         exerciseLogs['_id'] = userId;      
-        exerciseLogs['log'] = logs; 
+        exerciseLogs['log'] = newLogList; 
         return res.send(exerciseLogs);
         
      } catch (error) {
