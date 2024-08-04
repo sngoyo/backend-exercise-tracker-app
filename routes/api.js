@@ -44,10 +44,11 @@ router.post('/users/:_id/exercises', async(req, res) => {
     try {
         //Retrieving username by using given Id
         const  user = await User.findOne({_id : userId });
-        console.log(`username : ${user.username}`)
+      
  
         //Adding exercise details into the database
         await Exercise.create({ 'id': userId, 'date': exerciseDate, 'duration': parsedDuration, 'description': description });
+        console.log(`username : ${{'_id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description}}`)
         return res.json({'_id': userId, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description});
   
 
