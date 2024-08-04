@@ -31,10 +31,6 @@ router.post('/users/:_id/exercises', async(req, res) => {
    
     //Converting  duration value from String to number 
     let parsedDuration  = Number(duration);
-    if (isNaN(parsedDuration)) {
-        return res.status(400).json({ error: 'Duration must be a number' });
-    }
-
 
     //Capturing posted date if not posted enter current date
     const exerciseDate = date ? new Date(date).toDateString() : new Date().toDateString();
@@ -50,7 +46,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
         const  user = await User.findOne({_id : userId });
  
         //Adding exercise details into the database
-        await Exercise.create({ id: userId, date: exerciseDate, duration: parsedDuration, description: description });
+        await Exercise.create({ userId, date: exerciseDate, duration: parsedDuration, description });
         return res.json({_id: userId, username: user.username, date: exerciseDate, duration: parsedDuration, description: description});
   
 
