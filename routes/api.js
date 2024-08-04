@@ -67,11 +67,6 @@ router.post('/users/:_id/exercises', async(req, res) => {
 
         })
     
-     
-
-       // const userObject = {'_id':user._id, 'username': user.username};
-        //const exerciseObject = {'date': exerciseDate, 'duration': parsedDuration, 'description': description};  
-       // return res.json({...userObject, ...exerciseObject});
         }
   
     } catch (error) {
@@ -128,14 +123,6 @@ router.get('/users/:_id/logs', async (req, res) => {
                 return updatedLogDate >= fromDate && updatedLogDate <= toDate;        
             }) 
         }
-
-        
-       
-         /* logs = logs.map(log => ({
-            description: log.description, 
-            duration: log.duration, 
-            date: new Date(log.date).toDateString()
-         }))*/
 
          let newLogList = [];
          
