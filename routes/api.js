@@ -48,6 +48,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
         //Adding exercise details into the database
         await Exercise.create({ id: userId, date: exerciseDate, duration: parsedDuration, description: description });
         return res.json({_id: userId, username: user.username, date: exerciseDate, duration: parsedDuration, description: description});
+  
 
     } catch (error) {
         res.json({error : 'Information could not be saved, error occured'})
