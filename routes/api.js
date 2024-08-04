@@ -30,7 +30,7 @@ router.post('/users/:_id/exercises', async(req, res) => {
      
    
     //Converting  duration value from String to number 
-    let parsedDuration  = Number(duration);
+    const parsedDuration  = Number(duration);
 
     //Capturing posted date if not posted enter current date
     const exerciseDate = date ? new Date(date).toDateString() : new Date().toDateString();
@@ -51,13 +51,12 @@ router.post('/users/:_id/exercises', async(req, res) => {
       //  const excerciseData = await Exercise.findOne({'id': userId});
        // const newDate = new Date(excerciseData.date).toDateString();
 
-        /*console.log(`_id : ${excerciseData.id} `)
-        console.log(`username : ${excerciseData.username} `)
-       
-        console.log(`date : ${newDate} `)
-        console.log(`duration : ${excerciseData.duration} `)
-        console.log(`description : ${excerciseData.description} `)
-*/
+        console.log(`_id : ${user._id} `)
+        console.log(`username : ${user.username} `) 
+        console.log(`date : ${exerciseDate} `)
+        console.log(`duration : ${parsedDuration} `)
+        console.log(`description : ${description} `)
+
        // res.json({'_id': excerciseData.id, 'username': excerciseData.username, 'date': newDate, 'duration': excerciseData.duration, 'description': excerciseData.description});
         res.json({'_id':user._id, 'username': user.username, 'date': exerciseDate, 'duration': parsedDuration, 'description': description});
   
