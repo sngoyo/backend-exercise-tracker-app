@@ -78,7 +78,7 @@ router.get('/users/:_id/logs', async (req, res) => {
     const { from, to, limit } = req.query;
     let exerciseLogs = {};
     let logs;
-    const logLimit = parseInt(limitc, 10);
+    const logLimit = parseInt(limit, 10);
     
 
     //Checking "id" has value
