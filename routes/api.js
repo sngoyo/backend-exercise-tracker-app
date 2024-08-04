@@ -52,7 +52,8 @@ router.post('/users/:_id/exercises', async(req, res) => {
 
         console.log(`_id : ${excerciseData.id} `)
         console.log(`username : ${excerciseData.username} `)
-        console.log(`date : ${exerciseDate.date} `)
+        const newDate = new Date(excerciseData.date).toDateString();
+        console.log(`date : ${newDate} `)
         console.log(`duration : ${excerciseData.duration} `)
         console.log(`description : ${excerciseData.description} `)
 
